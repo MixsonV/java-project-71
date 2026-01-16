@@ -11,6 +11,7 @@ import picocli.CommandLine.Parameters;
 public class App implements Runnable {
     @Option(
             names = {"-f", "--format"},
+            paramLabel = "format",
             description = "Output format [default: ${DEFAULT-VALUE}]",
             defaultValue = "stylish"
     )
@@ -18,15 +19,17 @@ public class App implements Runnable {
 
     @Parameters(
             index = "0",
+            paramLabel = "filepath1",
             description = "Path to the first file"
     )
-    private String filepath1;
+    private String filePath1;
 
     @Parameters(
             index = "1",
+            paramLabel = "filepath2",
             description = "Path to the second file"
     )
-    private String filepath2;
+    private String filePath2;
 
     public void run() {}
 
