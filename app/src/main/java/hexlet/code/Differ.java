@@ -75,7 +75,7 @@ public class Differ {
     public static Map<String, Object> parseJsonFile(String content) throws Exception {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(content, new TypeReference<>() {});
+            return mapper.readValue(content, new TypeReference<>() { });
         } catch (Exception e) {
             throw new Exception("Error parsing JSON file: " + e.getMessage());
         }

@@ -1,6 +1,8 @@
 plugins {
     id("com.github.ben-manes.versions") version "0.53.0"
+    id("org.sonarqube") version "7.2.2.6593"
     application
+    checkstyle
 }
 
 group = "hexlet.code"
@@ -24,4 +26,11 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "MixsonV_java-project-71")
+        property("sonar.organization", "mixsonv")
+    }
 }
