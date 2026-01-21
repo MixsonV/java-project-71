@@ -20,6 +20,7 @@ public class DifferTest {
     private static String yamlFilePath2;
     private static String jsTempFilePath;
     private static String expectedStylish;
+    private static String expectedPlain;
     private static String expectedJson;
     private static String expectedYaml;
 
@@ -31,12 +32,13 @@ public class DifferTest {
         var yamlResourceUrl2 = DifferTest.class.getResource("/yaml_file_2.yaml");
         var jsResourceUrl = DifferTest.class.getResource("/js_file.js");
         var expectedStylishUrl = DifferTest.class.getResource("/expected_stylish");
+        var expectedPlainUrl = DifferTest.class.getResource("/expected_plain");
         var expectedJsonUrl = DifferTest.class.getResource("/expected_json");
         var expectedYamlUrl = DifferTest.class.getResource("/expected_yaml");
 
         if (jsonResourceUrl1 == null || jsonResourceUrl2 == null || yamlResourceUrl1 == null
                 || yamlResourceUrl2 == null || expectedStylishUrl == null || expectedJsonUrl == null
-                || expectedYamlUrl == null || jsResourceUrl == null) {
+                || expectedYamlUrl == null || jsResourceUrl == null || expectedPlainUrl == null) {
             throw new IllegalStateException("Test resources not found in classpath. "
                     + "Ensure they are in src/test/resources/");
         }
@@ -47,6 +49,7 @@ public class DifferTest {
         Path yamlSourcePath2 = Paths.get(yamlResourceUrl2.toURI());
         Path jsSourcePath = Paths.get(jsResourceUrl.toURI());
         Path expectedStylishSourcePath = Paths.get(expectedStylishUrl.toURI());
+        Path expectedPlainSourcePath = Paths.get(expectedPlainUrl.toURI());
         Path expectedJsonSourcePath = Paths.get(expectedJsonUrl.toURI());
         Path expectedYamlSourcePath = Paths.get(expectedYamlUrl.toURI());
 
@@ -69,26 +72,33 @@ public class DifferTest {
         yamlFilePath2 = yamlTempFile2.toString();
         jsTempFilePath = jsTempFile.toString();
         expectedStylish = Files.readString(expectedStylishSourcePath).trim();
+        expectedPlain = Files.readString(expectedPlainSourcePath).trim();
         expectedJson = Files.readString(expectedJsonSourcePath).trim();
         expectedYaml = Files.readString(expectedYamlSourcePath).trim();
     }
 
     @Test
-    void testGenerateWithJson() throws Exception {
+    void testGenerateWithJsonFormat() throws Exception {
         String actual = Differ.generate(jsonFilePath1, jsonFilePath2, "json").trim();
         assertEquals(expectedJson, actual);
     }
 
     @Test
-    void testGenerateWithYaml() throws Exception {
+    void testGenerateWithYamlFormat() throws Exception {
         String actual = Differ.generate(yamlFilePath1, yamlFilePath2, "yaml").trim();
         assertEquals(expectedYaml, actual);
     }
 
     @Test
-    void testGenerateWithStylish() throws Exception {
+    void testGenerateWithStylishFormat() throws Exception {
         String actual = Differ.generate(jsonFilePath1, jsonFilePath2, "stylish").trim();
         assertEquals(expectedStylish, actual);
+    }
+
+    @Test
+    void testGenerateWithPlainFormat() throws Exception {
+        String actual = Differ.generate(jsonFilePath1, jsonFilePath2, "plain").trim();
+        assertEquals(expectedPlain, actual);
     }
 
     @Test
