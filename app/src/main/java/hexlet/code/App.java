@@ -33,21 +33,17 @@ public final class App implements Callable<Integer> {
     )
     private String filePath2;
 
-    @Override
-    public Integer call() throws Exception {
-        try {
-            String resultDiff = Differ.generate(filePath1, filePath2, format);
-            System.out.println(resultDiff);
-            return 0;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return 1;
-        }
-    }
-
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        String formattedFormat = format == null || format.isEmpty() ? "stylish" : format.trim().toLowerCase();
+        String resultDiff = Differ.generate(filePath1, filePath2, formattedFormat);
+        System.out.println(resultDiff);
+        return 0;
     }
 
 }
